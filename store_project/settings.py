@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Rest Framework
     "rest_framework",
+    # Apps creadas
+    "products",
 ]
 
 MIDDLEWARE = [
@@ -77,13 +79,15 @@ WSGI_APPLICATION = "store_project.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'store_db',
-        'USER': os.environ.get('DB_USER', 'root'),
-        'PASSWORD': os.environ.get('DB_SECRET', 'root'),
-        'HOST':os.environ.get('DB_HOST',  '54.167.246.98'),  # o la dirección IP de tu servidor MySQL
-        'PORT': os.environ.get('DB_PORT', '3306'),  # el puerto predeterminado de MySQL
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "store_db",
+        "USER": os.environ.get("DB_USER", "root"),
+        "PASSWORD": os.environ.get("DB_SECRET", "root"),
+        "HOST": os.environ.get(
+            "DB_HOST", "54.167.246.98"
+        ),
+        "PORT": os.environ.get("DB_PORT", "3306"),
     }
 }
 
