@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# En este archivo se definen las rutas de la aplicación bajo el prefijo /api/v1/ para versionar la API
+# this file handles the main urls of the project with the /api/v1/ prefix
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -13,5 +13,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @property
     def calculate_price_with_tax(self):
         return self.base_price + ((self.tax_rate / 100) * self.base_price)

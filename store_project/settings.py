@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-@vo0kn3+d%4+1$d7oi&cv1$*(57ujhj3aa-5rh#8qjiz-o@s81"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost:8000",
+]
 
 
 # Application definition
@@ -80,16 +85,21 @@ WSGI_APPLICATION = "store_project.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "store_db",
-        "USER": os.environ.get("DB_USER", "root"),
-        "PASSWORD": os.environ.get("DB_SECRET", "root"),
-        "HOST": os.environ.get(
-            "DB_HOST", "54.167.246.98"
-        ),
-        "PORT": os.environ.get("DB_PORT", "3306"),
-    }
+    "default": (
+        {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+        if DEBUG
+        else {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("DB_NAME", "store_db"),
+            "USER": os.environ.get("DB_USER", "root"),
+            "PASSWORD": os.environ.get("DB_SECRET", "root"),
+            "HOST": os.environ.get("DB_HOST", "54.167.246.98"),
+            "PORT": os.environ.get("DB_PORT", "3306"),
+        }
+    )
 }
 
 # Password validation

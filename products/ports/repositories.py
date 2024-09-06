@@ -5,48 +5,47 @@ from products.core.models import Product
 class ProductRepository(ABC):
     @abstractmethod
     def save(self, product: Product) -> Product:
-        """Guarda un producto en la base de datos de Django
+        """Saves a product in the database of Django
 
         Args:
-            product: Objeto de tipo Product
+            product: Product object
 
         Returns:
-            Product: Retorna el producto creado con el id asignado
+            Product: Returns the product saved in the database
         """
         pass
 
     @abstractmethod
     def update(self, product: Product) -> Product:
-        """Actualiza un producto en la base de datos de Django
+        """Updates a product in the database of Django
 
         Args:
-            product: Objeto de tipo Product
+            product: Product object
 
         Returns:
-            Product: Retorna el producto actualizado con el id asignado
-            
+            Product: returns the updated product
+
         """
         pass
 
     @abstractmethod
     def get_by_id(self, product_id: int) -> Product:
-        """Retorna un producto en la base de datos de Django
+        """Retuns a product from the database of Django
 
         Args:
-            product_id: id del producto (Int)
+            product_id: product id
 
         Returns:
-            Product: Retorna el producto correspondiente al id
-            
-        Puede ser None si no se encuentra el producto
+            Product: Product object.
+
         """
         pass
 
     @abstractmethod
-    def list_all(self)-> list[Product]:
-        """Retorna todos los productos en la base de datos de Django
+    def list_all(self) -> list[Product]:
+        """Retrieves all products from the database of Django
 
         Returns:
-            Product: Retorna una lista de productos
+            Product: Product object
         """
         pass

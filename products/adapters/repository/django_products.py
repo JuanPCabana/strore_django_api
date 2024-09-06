@@ -4,13 +4,12 @@ from products.models import Product as DjangoProductModel
 
 
 class DjangoProductRepository(ProductRepository):
+    """
+    Handles the persistence of products in the Django database.
 
-    """"
-    Se encarga de la persistencia de los productos en la base de datos de Django
+    The methods save, update, get_by_id, and list_all are implemented.
 
-    Se implementan los metodos save, update, get_by_id y list_all
-
-    Estos metodos estan documentados en la interfaz ProductRepository
+    These methods are documented in the ProductRepository interface.
 
     """
 
@@ -21,7 +20,7 @@ class DjangoProductRepository(ProductRepository):
             description=product.description,
             base_price=product.base_price,
             tax_rate=product.tax_rate,
-            created_at=product.created_at
+            created_at=product.created_at,
         )
 
         product.id = django_product.pk
@@ -42,7 +41,7 @@ class DjangoProductRepository(ProductRepository):
         django_product.tax_rate = product.tax_rate
         try:
             django_product.save()
-        except Exception as e:
+        except ValueError as e:
             print(e)
             return None
 
@@ -57,7 +56,4 @@ class DjangoProductRepository(ProductRepository):
         return django_product
 
     def list_all(self) -> list[Product]:
-        return [
-            a
-            for a in DjangoProductModel.objects.all()
-        ]
+        return [a for a in DjangoProductModel.objects.all()]

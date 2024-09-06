@@ -8,32 +8,39 @@ class ProductService:
     def __init__(self, product_repository: ProductRepository):
         self.product_repository = product_repository
 
-    def create_product(self, reference: str, name: str, description: str, base_price: float, tax_rate: float) -> Product:
-        """Guarda un producto en la base de datos de Django
+    def create_product(
+        self,
+        reference: str,
+        name: str,
+        description: str,
+        base_price: float,
+        tax_rate: float,
+    ) -> Product:
+        """Saves a product in the database
 
         Args:
-            reference (str): Referencia del producto
-            name (str): Nombre del producto
-            description (str): Descripción del producto
-            base_price (float): Precio del producto
-            tax_rate (float): Tasa de impuesto del producto
+            reference (str): product reference
+            name (str): product name
+            description (str): product description
+            base_price (float): product base price
+            tax_rate (float): product tax rate
 
         Returns:
-            Product: Retorna el producto creado con el id asignado
+            Product: Returns the product saved in the database
         """
         product = Product(reference, name, description, base_price, tax_rate)
         self.product_repository.save(product)
         return product
 
-    def update_product(self, product_id, **kwargs) -> Product:
-        """Actualiza un producto en la base de datos de Django
+    def update_product(self, product_id: int, **kwargs) -> Product:
+        """Updates a product in the database
 
         Args:
-            product_id (int): id del producto
-            **kwargs: Campos a actualizar
+            product_id (int): product id
+            **kwargs: fields to update
 
         Returns:
-            Product: Retorna el producto actualizado con el id asignado
+            Product: returns the updated product
         """
 
         product = self.product_repository.get_by_id(product_id)
