@@ -31,7 +31,7 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
-    'localhost',
+    "localhost",
 ]
 
 
@@ -88,17 +88,17 @@ WSGI_APPLICATION = "store_project.wsgi.application"
 DATABASES = {
     "default": (
         {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-        if DEBUG
-        else {
             "ENGINE": "django.db.backends.mysql",
             "NAME": os.environ.get("DB_NAME", "store_db"),
             "USER": os.environ.get("DB_USER", "root"),
             "PASSWORD": os.environ.get("DB_SECRET", "root"),
             "HOST": os.environ.get("DB_HOST", "54.167.246.98"),
             "PORT": os.environ.get("DB_PORT", "3306"),
+        }
+        if not DEBUG
+        else {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     )
 }
@@ -138,6 +138,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+if not DEBUG:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

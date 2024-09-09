@@ -1,4 +1,6 @@
-FROM python:3.9.19-alpine3.19
+FROM python:3.9.19-bookworm
+
+RUN apt-get update && apt-get install -y pkg-config
 
 WORKDIR /app
 
@@ -13,7 +15,7 @@ ENV DB_USER=root
 ENV DB_SECRET=root
 ENV DB_HOST=54.167.246.98
 ENV DB_PORT=3306
-ENV DEBUG=True 
+ENV DEBUG=False 
 
 
 RUN python manage.py collectstatic --noinput
