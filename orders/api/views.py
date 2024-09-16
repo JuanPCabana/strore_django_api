@@ -5,7 +5,7 @@ from orders.core.services import OrderService
 from orders.adapters.repository.django_orders import DjangoOrderRepository
 from products.adapters.repository.django_products import DjangoProductRepository
 from store_project.utils import handle_response, response_error_handler, body_validator
-
+from orders.models import Order as DjangoOrderModel
 
 class OrderViewSet(viewsets.ViewSet):
     """Handles the CRUD operations for the Order model"""
@@ -13,7 +13,7 @@ class OrderViewSet(viewsets.ViewSet):
     repo = DjangoOrderRepository()
     product_repo = DjangoProductRepository()
     service = OrderService(repo, product_repo)
-    queryset = service.list_orders()
+    queryset = DjangoOrderModel.objects.all()
     permission_classes = [permissions.AllowAny]
 
     # Get Method

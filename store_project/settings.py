@@ -92,7 +92,7 @@ DATABASES = {
             "NAME": os.environ.get("DB_NAME", "store_db"),
             "USER": os.environ.get("DB_USER", "root"),
             "PASSWORD": os.environ.get("DB_SECRET", "root"),
-            "HOST": os.environ.get("DB_HOST", "54.167.246.98"),
+            "HOST": os.environ.get("DB_HOST", "db"),
             "PORT": os.environ.get("DB_PORT", "3306"),
         }
         if not DEBUG

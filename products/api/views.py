@@ -4,12 +4,13 @@ from products.api.serializers import ProductSerializer, ShortProductSerializer
 from products.adapters.repository.django_products import DjangoProductRepository
 from products.core.services import ProductService
 from store_project.utils import response_error_handler, body_validator, handle_response
+from products.models import Product as DjangoProductModel
 
 
 class ProductViewSet(viewsets.ViewSet):
     repo = DjangoProductRepository()
     service = ProductService(repo)
-    queryset = service.list_products()
+    queryset = DjangoProductModel.objects.all()
     permission_classes = [permissions.AllowAny]
     productSerializer = ProductSerializer
     shortProductSerializer = ShortProductSerializer
