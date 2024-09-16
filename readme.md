@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### 4. Configuración de variables de entorno
 
-El proyecto requiere algunas variables de entorno para configurarse correctamente. Crea un archivo `.env` en la raíz del proyecto y añade las siguientes variables:
+El proyecto requiere algunas variables de entorno para configurarse correctamente. Crea un archivo `.env` en la raíz del proyecto y añade las siguientes variables con los valores que correspondan:
 
 ```env
 DB_NAME=store_db
@@ -50,7 +50,7 @@ DB_USER=root
 
 DB_SECRET=root
 
-DB_HOST=54.167.246.98
+DB_HOST=db
 
 DB_PORT=3306
 
@@ -93,16 +93,17 @@ Si prefieres usar Docker, puedes levantar el proyecto dentro de un contenedor.
 ### 1. Construir la imagen de Docker
 
 ```bash
-docker build -t nombre_imagen .
+docker-compose up --build
 ```
 
-### 2. Ejecutar el contenedor
+### 2. Crear super usuario para entrar en el django admin
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name nombre_contenedor nombre_imagen
+docker exec -ti django_app python manage.py createsuperuser 
 ```
 
 El proyecto estará disponible en `http://localhost:8000/`.
+El Django Admin estara disponible en `http://localhost:8000/admin` (se debera ingresar con el super usuario creado previamente para gestionar los productos y ordenes)
 
 ## Testing
 
@@ -110,6 +111,11 @@ Para ejecutar las pruebas unitarias:
 
 ```bash
 python manage.py test
+```
+Desde docker:
+
+```bash
+docker exec -ti django_app python manage.py test
 ```
 
 ## Documentación de la API
