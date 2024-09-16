@@ -13,8 +13,4 @@ COPY . /app/
 COPY wait-for-db.sh /app/
 RUN chmod +x /app/wait-for-db.sh
 
-
-RUN python manage.py collectstatic --noinput
-
-
 EXPOSE 8000

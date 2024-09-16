@@ -20,6 +20,7 @@ services:
     container_name: django_app
     command: >
       sh -c "
+      python manage.py collectstatic --noinput &&
       chmod +x /app/wait-for-db.sh &&
       /app/wait-for-db.sh &&
       python manage.py makemigrations &&
@@ -37,7 +38,7 @@ services:
       DB_SECRET: root
       DB_HOST: db
       DB_PORT: 3306
-      DEBUG: 'False'
+      DEBUG: 'True'
     networks:
       - app_network
 
