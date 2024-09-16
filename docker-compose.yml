@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_DATABASE: store_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  web:
+    build: .
+    container_name: django_app
+    command: >
+      sh -c "
+      chmod +x /app/wait-for-db.sh &&
+      /app/wait-for-db.sh &&
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      gunicorn --bind 0.0.0.0:8000 store_project.wsgi:application"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: store_db
+      DB_USER: root
+      DB_SECRET: root
+      DB_HOST: db
+      DB_PORT: 3306
+      DEBUG: 'False'
+    networks:
+      - app_network
+
+volumes:
+  mysql_data:
+
+networks:
+  app_network:
