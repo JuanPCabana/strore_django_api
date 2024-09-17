@@ -59,7 +59,6 @@ DEBUG=False
 
 - `DEBUG`: Define si el modo de depuración está activado. Usa `True` para desarrollo y `False` para producción.
 
-
 ### 5. Migraciones de la base de datos
 
 Aplica las migraciones a la base de datos para crear las tablas necesarias:
@@ -99,7 +98,7 @@ docker-compose up --build
 ### 2. Crear super usuario para entrar en el django admin
 
 ```bash
-docker exec -ti django_app python manage.py createsuperuser 
+docker exec -ti django_app python manage.py createsuperuser
 ```
 
 El proyecto estará disponible en `http://localhost:8000/`.
@@ -112,6 +111,7 @@ Para ejecutar las pruebas unitarias:
 ```bash
 python manage.py test
 ```
+
 Desde docker:
 
 ```bash
@@ -120,10 +120,14 @@ docker exec -ti django_app python manage.py test
 
 ## Documentación de la API
 
-Puedes acceder a la documentación de la API en:
+Una vez levantado el proyecto puedes acceder a la documentación de la API con Swagger en:
 
 ```
-https://documenter.getpostman.com/view/21621812/2sAXjRVUdV
+http://localhost:8000/api/v1/docs/
+
+ó
+
+http://localhost:8000/api/v1/redocs/
 ```
 
 ## Despliegue

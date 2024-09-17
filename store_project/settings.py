@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Rest Framework
     "rest_framework",
+    # swagger
+    "drf_yasg",
     # Apps creadas
     "products",
     "orders",
@@ -155,3 +157,5 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
+
+LOGIN_URL = "admin:login"

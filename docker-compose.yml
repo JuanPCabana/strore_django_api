@@ -38,7 +38,7 @@ services:
       DB_SECRET: root
       DB_HOST: db
       DB_PORT: 3306
-      DEBUG: 'True'
+      DEBUG: 'False'
     networks:
       - app_network
 

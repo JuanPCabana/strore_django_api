@@ -2,7 +2,7 @@ from rest_framework import serializers
 from orders.models import Order as DjangoOrderModel, OrderItem as DjangoOrderItemModel
 from products.models import Product as DjangoProductModel
 
-
+# Serializers for the models
 class ProductSerializer(serializers.ModelSerializer):
     """Serializer for the Product model"""
 
@@ -44,3 +44,23 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = DjangoOrderModel
         fields = ["id", "created_at", "items", "order_base_price", "order_total_price"]
+
+
+# Serializers for the requests
+
+class CreateOrderSerializer(serializers.Serializer):
+    """Serializer for the Create Order model"""
+
+    class ItemSerializer(serializers.Serializer):
+        product_id = serializers.IntegerField(help_text="Product ID")
+        quantity = serializers.IntegerField(
+            help_text="Product quantity to add to the order"
+        )
+
+        class Meta:
+            fields = ["product_id", "quantity"]
+
+    items = serializers.ListField(
+        child=ItemSerializer(),
+        allow_empty=False,
+    )

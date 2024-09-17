@@ -1,6 +1,13 @@
 from rest_framework import viewsets, status, permissions
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
-from products.api.serializers import ProductSerializer, ShortProductSerializer
+from products.api.serializers import (
+    ProductSerializer,
+    ShortProductSerializer,
+    CreateProductSerializer,
+    UpdateProductSerializer,
+)
 from products.adapters.repository.django_products import DjangoProductRepository
 from products.core.services import ProductService
 from store_project.utils import response_error_handler, body_validator, handle_response
@@ -16,8 +23,11 @@ class ProductViewSet(viewsets.ViewSet):
     shortProductSerializer = ShortProductSerializer
 
     # Get Method
+    @swagger_auto_schema(
+        operation_description="Lists all the products",
+        responses={200: ShortProductSerializer(many=True)},
+    )
     def list(self, request):
-        """List the products"""
 
         products = self.service.list_products()
         serializer = self.shortProductSerializer(products, many=True)
@@ -25,6 +35,18 @@ class ProductViewSet(viewsets.ViewSet):
         return handle_response(serializer.data)
 
     # Get Method By ID
+    @swagger_auto_schema(
+        operation_description="Retrieve a product by id",
+        responses={200: ProductSerializer},
+        manual_parameters=[
+            openapi.Parameter(
+                "id",
+                openapi.IN_PATH,
+                description="Product Id",
+                type=openapi.TYPE_INTEGER,
+            )
+        ],
+    )
     def retrieve(self, request, pk=None):
         """Retrieves a product"""
 
@@ -39,6 +61,11 @@ class ProductViewSet(viewsets.ViewSet):
         return handle_response(serializer.data)
 
     # Post Method
+    @swagger_auto_schema(
+        operation_description="Creates a product",
+        request_body=CreateProductSerializer,
+        responses={201: ProductSerializer},
+    )
     def create(self, request):
         """Creates a product"""
 
@@ -75,6 +102,11 @@ class ProductViewSet(viewsets.ViewSet):
         return handle_response(serializer.data, status_code=status.HTTP_201_CREATED)
 
     # Put Method
+    @swagger_auto_schema(
+        operation_description="Updates a product",
+        request_body=UpdateProductSerializer,
+        responses={200: ProductSerializer},
+    )
     def update(self, request, pk=None):
         """Updates a product"""
 
@@ -108,6 +140,11 @@ class ProductViewSet(viewsets.ViewSet):
         return handle_response(serializer.data, status_code=status.HTTP_200_OK)
 
     # Patch Method
+    @swagger_auto_schema(
+        operation_description="Updates a product",
+        request_body=UpdateProductSerializer,
+        responses={200: ProductSerializer},
+    )
     def partial_update(self, request, *args, **kwargs):
         """Partial update of a product"""
 
